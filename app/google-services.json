@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "419362075266",
+    "firebase_url": "https://whatsappkotlinaris-default-rtdb.firebaseio.com",
+    "project_id": "whatsappkotlinaris",
+    "storage_bucket": "whatsappkotlinaris.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419362075266:android:796e6d8d28ae3dc9993a9b",
+        "android_client_info": {
+          "package_name": "com.aris.whatsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419362075266-015a13jv20gk5n170j5ln4g40dj4omi3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aris.whatsapp",
+            "certificate_hash": "80949f8b8dcdd4e176df7e1a8c370c71c6721224"
+          }
+        },
+        {
+          "client_id": "419362075266-l14mc2pgm2e7cc5csgs7r1pdscnktg5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANqqCoJj9WD9VLEhdkwFHtohFiss5mJ24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419362075266-l14mc2pgm2e7cc5csgs7r1pdscnktg5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
