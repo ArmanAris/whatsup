@@ -2,6 +2,8 @@ package com.aris.whatsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -14,50 +16,39 @@ import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
-    private var mAuth: FirebaseAuth? = null
-    private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mAuth = FirebaseAuth.getInstance()
-        mAuth!!.signInWithEmailAndPassword("ashil_troy@yahoo.com", "ashil71")
-            .addOnCompleteListener { task: Task<AuthResult> ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "user sign in Successful", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, "user sign in UnSuccessful", Toast.LENGTH_LONG).show()
-                }
+
+
+        val Email1 = findViewById<EditText>(R.id.EmailAddress)
+        val password1 = findViewById<EditText>(R.id.Password)
+        val btn = findViewById<Button>(R.id.button)
+
+
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+        btn.setOnClickListener {
+            val Email = Email1.text.toString()
+            val password = password1.text.toString()
+            if (Email.trim().isNotEmpty() && password.trim().isNotEmpty()) {
+                mAuth.createUserWithEmailAndPassword(Email, password)
+                    .addOnCompleteListener { task: Task<AuthResult> ->
+                        if (task.isSuccessful) {
+                            val user: FirebaseUser = mAuth.currentUser!!
+                            Toast.makeText(this, user.email.toString(), Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Errooooooor!!!!!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+            } else {
+                Toast.makeText(this, "اطلاعات را کامل کنید!!!!!!", Toast.LENGTH_SHORT).show()
             }
-
-//        var databaseA = FirebaseDatabase.getInstance()
-//        var databaseref = databaseA.getReference("message").push()
-//        databaseref.setValue("Arman Aris")
-//
-//
-//        databaseref.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                var data = snapshot.value as HashMap<String , Any>
-//                data.get("Key")
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        user = mAuth!!.currentUser
-        if (user != null) {
-            Toast.makeText(this, "user login", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "user logout", Toast.LENGTH_LONG).show()
         }
+
 
     }
 }
