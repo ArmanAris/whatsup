@@ -6,4 +6,7 @@
     <string name="welcome">Welcom To WhatsUp</string>
     <string name="sign">Sign In</string>
     <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="email_edit">Enter Your Email</string>
+    <string name="password_">Enter  Your Password</string>
 </resources>

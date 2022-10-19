@@ -1,5 +1,6 @@
 package com.aris.whatsapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -21,8 +22,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val btn_sign = findViewById<Button>(R.id.btn_sign)
 
-
+        btn_sign.setOnClickListener {
+            val intent = Intent(this, login::class.java)
+            startActivity(intent)
+        }
 
 
     }
