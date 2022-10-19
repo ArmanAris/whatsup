@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">WhatsApp</string>
+    <string name="app_name">WhatsUp</string>
     <string name="email">Enter Your Email</string>
     <string name="password">Enter Your PassWord</string>
     <string name="save">Save</string>
+    <string name="welcome">Welcom To WhatsUp</string>
+    <string name="sign">Sign In</string>
+    <string name="create_account">Create Account</string>
 </resources>
