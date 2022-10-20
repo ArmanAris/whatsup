@@ -5,19 +5,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg"
-    tools:context=".login">
-
+    tools:context=".createac">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardw"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_input_cursor"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true"
-       >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,15 +24,23 @@
             android:background="@color/teal_700"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/chat_icon" />
+
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/login"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/create_account"
                 android:textColor="@color/gray_100"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="TextContrastCheck,TextContrastCheck" />
 
@@ -46,7 +53,21 @@
                 android:paddingEnd="30dp">
 
                 <EditText
-                    android:id="@+id/EmailAddress"
+                    android:id="@+id/nameca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_bg_edit_2"
+                    android:ems="10"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/gray_100"
+                    android:textCursorDrawable="@drawable/bg_input_cursor"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/EmailAddressca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_bg_edit_2"
@@ -60,7 +81,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/Password"
+                    android:id="@+id/Passwordca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -73,7 +94,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/login"
+                    android:id="@+id/ca"
                     android:layout_width="150dp"
                     android:layout_gravity="center"
                     android:layout_height="50dp"
@@ -81,10 +102,12 @@
                     android:textAllCaps="false"
                     android:background="@drawable/bt_shape"
                     android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
                     android:stateListAnimator="@drawable/state_list_animator_z"
-                    android:text="@string/login" />
+                    android:text="@string/create_account" />
 
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
