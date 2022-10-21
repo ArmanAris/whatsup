@@ -1,5 +1,6 @@
 package com.aris.whatsapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -57,10 +58,14 @@ class Createac : AppCompatActivity() {
                     Objectsdata.put("Image", "default")
 
                     mdatabase!!.setValue(Objectsdata).addOnCompleteListener { task: Task<Void> ->
-                        if (task.isSuccessful){
-                            Toast.makeText(this, "User Add to DataBase", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(this, "User Not Add to DataBase", Toast.LENGTH_SHORT).show()
+                        if (task.isSuccessful) {
+                            val intent = Intent(this, DashBoard::class.java)
+                            intent.putExtra("name", name)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "User Not Add to DataBase", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
 
