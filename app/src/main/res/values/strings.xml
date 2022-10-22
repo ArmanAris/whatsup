@@ -10,6 +10,13 @@
     <string name="email_edit">Enter Your Email</string>
     <string name="password_">Enter  Your Password</string>
     <string name="name">Enter  Your Name</string>
+    <string name="logout">Log Out</string>
+    <string name="setting">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="namesetting">Full Name</string>
+    <string name="emailsetting">Email</string>
+    <string name="changename">Edit Name</string>
+    <string name="changepicsetting">Change Picture</string>
+    <string name="pic">Change Picture</string>
 </resources>
