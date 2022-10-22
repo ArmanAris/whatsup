@@ -22,16 +22,12 @@ class MainActivity : AppCompatActivity() {
 
         mAuthlistener = FirebaseAuth.AuthStateListener { firebaseAuth: FirebaseAuth ->
             user = firebaseAuth.currentUser
-
             if (user != null) {
                 val intent = Intent(this, DashBoard::class.java)
                 val email1 = user!!.email!!.split("@")[0]
                 intent.putExtra("name", email1)
                 startActivity(intent)
                 finish()
-            }else{
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT)
-                    .show()
             }
         }
 
@@ -63,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         if(mAuthlistener !=null){
             mAuth!!.removeAuthStateListener(mAuthlistener!!)
         }
-
 
     }
 }

@@ -46,6 +46,7 @@ class Createac : AppCompatActivity() {
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "User Create", Toast.LENGTH_SHORT).show()
+
                     val user = mAuth!!.currentUser
                     val id = user!!.uid
 
