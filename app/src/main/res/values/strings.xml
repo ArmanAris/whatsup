@@ -19,4 +19,5 @@
     <string name="changename">Edit Name</string>
     <string name="changepicsetting">Change Picture</string>
     <string name="pic">Change Picture</string>
+    <string name="save1">Save</string>
 </resources>
