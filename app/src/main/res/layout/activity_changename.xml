@@ -10,6 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="300dp"
+
         app:cardCornerRadius="30dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,8 +20,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+        android:background="@color/teal_700"
             android:layout_height="match_parent"
-            android:layout_margin="30dp"
+            android:padding="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -34,9 +36,10 @@
 
             <EditText
                 android:id="@+id/editTextTextPersonName"
+                android:background="@drawable/selector_bg_edit_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:ems="10"
                 android:hint="@string/logout"
                 android:inputType="textPersonName"
@@ -49,7 +52,10 @@
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/bg_input_cursor"
                 android:text="@string/save1" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

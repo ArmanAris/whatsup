@@ -24,7 +24,7 @@ class DashBoard : AppCompatActivity() {
         dashboardview.adapter = adaptor
 
         tablayout.setupWithViewPager(dashboardview)
-        tablayout.setTabTextColors(Color.WHITE, Color.GREEN)
+        tablayout.setTabTextColors(Color.WHITE, Color.GRAY)
 
         val name = intent!!.extras!!.getString("name")
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
