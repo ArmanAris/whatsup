@@ -1,17 +1,30 @@
 package com.aris.whatsapp
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.yalantis.ucrop.UCrop
+import java.io.File
+import java.util.*
 
 class Setting : AppCompatActivity() {
+
+    lateinit var database: DatabaseReference
+    lateinit var userid: FirebaseUser
+    lateinit var mStorage: StorageReference
 
     val GALLERY_ID: Int = 1
 
@@ -20,9 +33,12 @@ class Setting : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         supportActionBar!!.title = "Settings"
-        val userid = FirebaseAuth.getInstance().currentUser!!.uid
-        val database = FirebaseDatabase.getInstance().reference.child("Users").child(userid)
+        userid = FirebaseAuth.getInstance().currentUser!!
+        val id = userid.uid
 
+        database = FirebaseDatabase.getInstance().reference.child("Users").child(id)
+
+        mStorage = FirebaseStorage.getInstance().reference
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -60,6 +76,24 @@ class Setting : AppCompatActivity() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GALLERY_ID && resultCode == Activity.RESULT_OK) {
+
+            val images: Uri? = data!!.data
+
+            val des: String = StringBuilder(UUID.randomUUID().toString()).toString()
+            UCrop.of(Uri.parse(images.toString()), Uri.fromFile(File(cacheDir, des)))
+                .withAspectRatio(1f, 1f)
+                .withMaxResultSize(2000, 2000).start(this)
+        }
+
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            val resultUri = UCrop.getOutput(data!!)
+            val id = userid.uid
+            val imagefile = File(resultUri!!.path)
+        }
+
+
+        // super.onActivityResult(requestCode, resultCode, data)
     }
 }
