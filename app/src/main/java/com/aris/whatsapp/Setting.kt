@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -19,6 +20,7 @@ import com.google.firebase.storage.StorageReference
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.util.*
+import kotlin.collections.HashMap
 
 class Setting : AppCompatActivity() {
 
@@ -33,6 +35,7 @@ class Setting : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         supportActionBar!!.title = "Settings"
+
         userid = FirebaseAuth.getInstance().currentUser!!
         val id = userid.uid
 
@@ -63,12 +66,13 @@ class Setting : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        //----------------- Open Gallery---------------------------
         findViewById<Button>(R.id.changpic).setOnClickListener {
             val galleryIntent = Intent()
             galleryIntent.type = "image/*"
             galleryIntent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(galleryIntent, "choose image"), GALLERY_ID)
-
         }
 
 
@@ -79,8 +83,11 @@ class Setting : AppCompatActivity() {
 
         if (requestCode == GALLERY_ID && resultCode == Activity.RESULT_OK) {
 
+            //----------------- get image Gallery---------------------------
             val images: Uri? = data!!.data
 
+
+            //----------------- Open uCrop---------------------------
             val des: String = StringBuilder(UUID.randomUUID().toString()).toString()
             UCrop.of(Uri.parse(images.toString()), Uri.fromFile(File(cacheDir, des)))
                 .withAspectRatio(1f, 1f)
@@ -88,9 +95,40 @@ class Setting : AppCompatActivity() {
         }
 
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
-            val resultUri = UCrop.getOutput(data!!)
-            val id = userid.uid
+            //----------------- get image uCrop---------------------------
+            val resultUri: Uri? = UCrop.getOutput(data!!)
+
+
             val imagefile = File(resultUri!!.path)
+
+            //----------------- sent to firebase Storage---------------------------
+            val id = userid.uid
+            val filepath = mStorage.child("Profile Image").child("Original Image")
+                .child("$id .jpg")
+
+            filepath.putFile(resultUri).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val addressImage = it.result.toString()
+                    Toast.makeText(this, "ADD Image", Toast.LENGTH_LONG).show()
+
+                    //----------------- update firebase database---------------------------
+                    val objects = HashMap<String, Any>()
+                    objects.put("Image",addressImage)
+
+                    database.updateChildren(objects).addOnCompleteListener {
+                        if (it.isSuccessful){
+                            Toast.makeText(this, "ADD Image Name", Toast.LENGTH_LONG).show()
+                        }else{
+                            Toast.makeText(this, "Error: ADD Image Name", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+
+                } else {
+                    Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+                }
+            }
+
         }
 
 
