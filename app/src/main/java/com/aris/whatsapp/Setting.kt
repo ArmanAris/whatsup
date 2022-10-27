@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.util.*
@@ -52,6 +53,10 @@ class Setting : AppCompatActivity() {
 
                 findViewById<TextView>(R.id.namesetting).text = name.toString()
                 findViewById<TextView>(R.id.emailsetting).text = email.toString()
+
+                if (image != "default"){
+
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -99,27 +104,30 @@ class Setting : AppCompatActivity() {
             val resultUri: Uri? = UCrop.getOutput(data!!)
 
 
-            val imagefile = File(resultUri!!.path)
-
             //----------------- sent to firebase Storage---------------------------
             val id = userid.uid
             val filepath = mStorage.child("Profile Image").child("Original Image")
                 .child("$id .jpg")
 
-            filepath.putFile(resultUri).addOnCompleteListener {
+            filepath.putFile(resultUri!!).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val addressImage = it.result.toString()
-                    Toast.makeText(this, "ADD Image", Toast.LENGTH_LONG).show()
 
-                    //----------------- update firebase database---------------------------
-                    val objects = HashMap<String, Any>()
-                    objects.put("Image",addressImage)
+                    //----------------- download Url ---------------------------
+                    filepath.downloadUrl.addOnCompleteListener {
 
-                    database.updateChildren(objects).addOnCompleteListener {
-                        if (it.isSuccessful){
-                            Toast.makeText(this, "ADD Image Name", Toast.LENGTH_LONG).show()
-                        }else{
-                            Toast.makeText(this, "Error: ADD Image Name", Toast.LENGTH_LONG).show()
+                        val addressImage = it.toString()
+                        Toast.makeText(this, addressImage, Toast.LENGTH_LONG).show()
+                        //----------------- update firebase database---------------------------
+                        val objects = HashMap<String, Any>()
+                        objects.put("Image", addressImage)
+
+                        database.updateChildren(objects).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(this, "ADD Image Name", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(this, "Error: ADD Image Name", Toast.LENGTH_LONG)
+                                    .show()
+                            }
                         }
                     }
 
