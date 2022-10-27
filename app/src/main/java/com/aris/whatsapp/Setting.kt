@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -29,11 +30,16 @@ class Setting : AppCompatActivity() {
     lateinit var userid: FirebaseUser
     lateinit var mStorage: StorageReference
 
+
     val GALLERY_ID: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+
+
+
+
 
         supportActionBar!!.title = "Settings"
 
@@ -44,19 +50,26 @@ class Setting : AppCompatActivity() {
 
         mStorage = FirebaseStorage.getInstance().reference
 
+
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name = snapshot.child("Name").value
                 val email = snapshot.child("Email").value
                 val password = snapshot.child("PassWord").value
-                val image = snapshot.child("Image").value
+                val image = snapshot.child("Image").value.toString()
 
                 findViewById<TextView>(R.id.namesetting).text = name.toString()
                 findViewById<TextView>(R.id.emailsetting).text = email.toString()
 
-                if (image != "default"){
+               val target =
+                    findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.imagesetting)
 
+                if (image != "default") {
+                    Picasso.with(this@Setting).load(image).placeholder(R.drawable.profile_img)
+                        .into(target)
                 }
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -103,7 +116,6 @@ class Setting : AppCompatActivity() {
             //----------------- get image uCrop---------------------------
             val resultUri: Uri? = UCrop.getOutput(data!!)
 
-
             //----------------- sent to firebase Storage---------------------------
             val id = userid.uid
             val filepath = mStorage.child("Profile Image").child("Original Image")
@@ -116,6 +128,8 @@ class Setting : AppCompatActivity() {
                     filepath.downloadUrl.addOnCompleteListener {
 
                         val addressImage = it.toString()
+
+
                         Toast.makeText(this, addressImage, Toast.LENGTH_LONG).show()
                         //----------------- update firebase database---------------------------
                         val objects = HashMap<String, Any>()
